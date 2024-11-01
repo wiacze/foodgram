@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets
 
 from core.models import Tag
 from api.serializers.tags import TagSerializer

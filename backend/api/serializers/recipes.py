@@ -3,14 +3,14 @@ from django.db import transaction
 from rest_framework import serializers
 
 from core.models import Recipe, IngredientAmount, Tag
+from api.utils.fields import Base64ImageField
+from api.utils.generators import generate_hash
 from .tags import TagSerializer
 from .users import GetUserSerializer
 from .ingredients import (
     IngredientAmountSerializer,
     IngredientAmountShortSerializer,
 )
-from api.utils.fields import Base64ImageField
-from api.utils.generators import generate_hash
 
 
 User = get_user_model()

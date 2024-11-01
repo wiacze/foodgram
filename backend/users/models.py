@@ -1,4 +1,4 @@
-"""User model for FOODGRAM PROJECT"""
+"""User model for FOODGRAM PROJECT."""
 
 from django.db import models
 from django.contrib.auth.models import AbstractUser
@@ -41,10 +41,10 @@ class CustomUser(AbstractUser):
         null=True,
         default=None
     )
-    # is_admin = models.BooleanField(
-    #     verbose_name='is_admin',
-    #     default=False,
-    # )
+    is_admin = models.BooleanField(
+        verbose_name='Права администратора',
+        default=False,
+    )
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -74,6 +74,7 @@ class Subscription(models.Model):
     class Meta:
         verbose_name = 'Подписка'
         verbose_name_plural = 'Подписки'
+        default_related_name = 'subscriptions'
         ordering = ('author',)
         constraints = [
             models.UniqueConstraint(

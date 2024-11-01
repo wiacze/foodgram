@@ -1,5 +1,3 @@
-"""User views for FOODGRAM"""
-
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
 from djoser.views import UserViewSet
@@ -53,10 +51,12 @@ class CustomUserViewSet(UserViewSet):
         methods=['get'],
         url_path='subscriptions',
         url_name='Subscriptions',
-        permission_classes=(permissions.IsAuthenticated,)
+        permission_classes=(permissions.IsAuthenticated,),
     )
     def get_subscriptions(self, request):
-        subscriptions = Subscription.objects.filter(subscriber=self.request.user)
+        subscriptions = Subscription.objects.filter(
+            subscriber=self.request.user
+        )
         pages = self.paginate_queryset(subscriptions)
         serializer = SubscribtionSerializer(
             pages, many=True, context={'request': request}
@@ -72,7 +72,8 @@ class CustomUserViewSet(UserViewSet):
     def subscribe(self, request, id):
         author = get_object_or_404(User, id=id)
         serializer = SubscribtionSerializer(
-            data={'subscriber': request.user.id, 'author': author.id}
+            data={'subscriber': request.user.id, 'author': author.id},
+            context={'request': request},
         )
         serializer.is_valid(raise_exception=True)
         serializer.save()
@@ -81,8 +82,10 @@ class CustomUserViewSet(UserViewSet):
     @subscribe.mapping.delete
     def delete_subscribe(self, request, id):
         author = get_object_or_404(User, id=id)
-        subscription = get_object_or_404(
-            Subscription, subscriber=request.user, author=author
+        subscription = Subscription.objects.filter(
+            subscriber=request.user, author=author
         )
-        subscription.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+        if subscription.exists():
+            subscription.delete()
+            return Response(status=status.HTTP_204_NO_CONTENT)
+        return Response(status=status.HTTP_400_BAD_REQUEST)

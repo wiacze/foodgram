@@ -1,4 +1,4 @@
-"""Core models for FOODGRAM PROJECT"""
+"""Core models for Foodgram."""
 
 from django.db import models
 from django.contrib.auth import get_user_model
@@ -59,7 +59,7 @@ class Ingredient(models.Model):
         ]
 
     def __str__(self):
-        return f'self.name ({self.measurement_unit})'
+        return f'{self.name} ({self.measurement_unit})'
 
 
 class Recipe(models.Model):
@@ -70,7 +70,7 @@ class Recipe(models.Model):
         through='IngredientAmount',
         through_fields=('recipe', 'ingredient'),
         related_name='recipes',
-        verbose_name='Ингредиенты'
+        verbose_name='Ингредиенты',
     )
     tags = models.ManyToManyField(
         Tag,
@@ -110,6 +110,12 @@ class Recipe(models.Model):
         auto_now_add=True,
         verbose_name='Дата публикации',
     )
+    hash_url = models.CharField(
+        max_length=constants.HASH_LENGTH,
+        unique=True,
+        blank=True,
+        verbose_name='Хэш',
+    )
 
     class Meta:
         verbose_name = 'Рецепт'
@@ -148,7 +154,8 @@ class RecipeFieldModel(models.Model):
 
 class IngredientAmount(RecipeFieldModel):
     """Модель, связывающая ингредиенты с рецептом.
-    Позволяет указать кол-во ингредиента в рецепте."""
+    Позволяет указать кол-во ингредиента в рецепте.
+    """
 
     ingredient = models.ForeignKey(
         Ingredient,
@@ -172,6 +179,7 @@ class IngredientAmount(RecipeFieldModel):
     class Meta:
         verbose_name = 'Количество ингредиента.'
         verbose_name_plural = 'Количество ингредиента.'
+        default_related_name = 'amount_ingredients'
         ordering = ('id',)
         constraints = (
             models.UniqueConstraint(
@@ -179,6 +187,9 @@ class IngredientAmount(RecipeFieldModel):
                 name='unique_recipe_ingredient'
             ),
         )
+
+    def __str__(self):
+        return self.ingredient.name
 
 
 class Favorite(UserFieldModel, RecipeFieldModel):

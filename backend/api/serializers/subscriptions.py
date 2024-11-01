@@ -6,16 +6,6 @@ from .recipes import RecipesCountSerializer
 
 class SubscribtionSerializer(serializers.ModelSerializer):
 
-    # subscriber = serializers.SlugRelatedField(
-    #     read_only=True,
-    #     slug_field='email',
-    #     default=serializers.CurrentUserDefault(),
-    # )
-    # author = serializers.SlugRelatedField(
-    #     slug_field='email',
-    #     queryset=User.objects.all(),
-    # )
-
     class Meta:
         model = Subscription
         fields = '__all__'

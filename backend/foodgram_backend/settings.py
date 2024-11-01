@@ -2,8 +2,10 @@
 
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
+
+
+from .constants import PAGE_SIZE
 
 
 load_dotenv()
@@ -17,7 +19,7 @@ DEBUG = bool(os.getenv('DEBUG') == 'True')
 SERVER_IP = os.getenv('SERVER_IP', '127.0.0.1')
 DOMAIN = os.getenv('DOMAIN', 'localhost')
 
-ALLOWED_HOSTS = [SERVER_IP, DOMAIN]
+ALLOWED_HOSTS = ['89.169.174.166', '127.0.0.1', 'localhost', 'foodgram-project.ddns.net']
 
 
 # Application definition
@@ -32,8 +34,9 @@ INSTALLED_APPS = [
     # Installed libs
     'rest_framework',
     'rest_framework.authtoken',
+    'django_filters',
     'djoser',
-    # Project apps
+    # Foodgram apps
     'users.apps.UsersConfig',
     'core.apps.CoreConfig',
     'api.apps.ApiConfig',
@@ -71,18 +74,30 @@ WSGI_APPLICATION = 'foodgram_backend.wsgi.application'
 
 
 # Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': os.getenv('POSTGRES_DB', 'django'),
+#         'USER': os.getenv('POSTGRES_USER', 'django'),
+#         'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+#         'HOST': os.getenv('DB_HOST', ''),
+#         'PORT': os.getenv('DB_PORT', 5432)
+#     }
+# }
+
+# If need sqlite
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/data/db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+        # 'NAME': '/data/db.sqlite3',
     }
 }
 
 
 # Password validation
-# https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -101,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'ru-RU'
 
@@ -114,8 +128,7 @@ USE_L10N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
+# Static and data files (CSS, JavaScript, Images, CSV, JSON)
 
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'collected_static'
@@ -123,11 +136,11 @@ STATIC_ROOT = BASE_DIR / 'collected_static'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = '/media/'
 
+CSV_DATA_DIR = BASE_DIR / 'data'
+
 # Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # API and AUTH settings
 
@@ -140,8 +153,8 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
     ],
-    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 6,
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': PAGE_SIZE,
 }
 
 DJOSER = {
@@ -154,7 +167,6 @@ DJOSER = {
     },
     'PERMISSIONS': {
         'user_list': ['rest_framework.permissions.AllowAny'],
-        # 'user': ['djoser.permissions.CurrentUserOrAdminOrReadOnly'],
         'user': ['rest_framework.permissions.AllowAny'],
     },
 }

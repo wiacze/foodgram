@@ -35,5 +35,3 @@ services:
       - media:/media/
     ports:
       - ${GATEWAY_PORTS}
-    depends_on:
-      - frontend

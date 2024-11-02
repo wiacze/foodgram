@@ -59,9 +59,6 @@ class CustomUser(AbstractUser):
         if self.is_superuser:
             self.is_admin = True
             self.is_staff = True
-        if not self.is_superuser:
-            self.is_admin = False
-            self.is_staff = False
         if self.is_admin:
             self.is_staff = True
         if not self.is_admin:

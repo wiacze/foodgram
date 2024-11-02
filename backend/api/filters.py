@@ -14,7 +14,7 @@ User = get_user_model()
 
 class IngredientFilter(FilterSet):
 
-    name = CharFilter(lookup_expr='istartswith')
+    name = CharFilter(lookup_expr='icontains')
 
     class Meta:
         model = Ingredient

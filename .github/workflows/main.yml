@@ -119,6 +119,6 @@ jobs:
       - name: Push to DockerHub
         uses: docker/build-push-action@v4
         with:
-          context: ./gateway/
+          context: ./infra/
           push: true
           tags: wiacze/foodgram_gateway:latest

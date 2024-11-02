@@ -22,7 +22,9 @@ class CustomUserAdmin(UserAdmin):
             'fields': ('first_name', 'last_name', 'email', 'avatar')
         }),
         (('Права доступа'), {
-            'fields': ('is_active', 'is_superuser', 'is_admin'),
+            'fields': (
+                'is_active', 'is_superuser', 'is_admin', 'user_permissions'
+            ),
         }),
         (('Важные даты'), {'fields': ('last_login', 'date_joined')}),
     )

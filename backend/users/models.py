@@ -44,6 +44,10 @@ class CustomUser(AbstractUser):
     )
     is_admin = models.BooleanField(
         verbose_name='Права администратора',
+        help_text=(
+            'Указывает, что пользователь имеет расширенные права на сайте. '
+            'Права админ-зоны настраиваются отдельно'
+        ),
         default=False,
     )
 
@@ -63,6 +67,7 @@ class CustomUser(AbstractUser):
             self.is_staff = True
         if not self.is_admin:
             self.is_staff = False
+
         super().save(*args, **kwargs)
 
 

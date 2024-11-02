@@ -38,6 +38,7 @@ class CustomUser(AbstractUser):
     avatar = models.ImageField(
         verbose_name='Аватар',
         upload_to='users/',
+        blank=True,
         null=True,
         default=None
     )
@@ -53,6 +54,19 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        if self.is_superuser:
+            self.is_admin = True
+            self.is_staff = True
+        if not self.is_superuser:
+            self.is_admin = False
+            self.is_staff = False
+        if self.is_admin:
+            self.is_staff = True
+        if not self.is_admin:
+            self.is_staff = False
+        super().save(*args, **kwargs)
 
 
 class Subscription(models.Model):

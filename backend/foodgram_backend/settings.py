@@ -19,7 +19,7 @@ DEBUG = bool(os.getenv('DEBUG') == 'True')
 SERVER_IP = os.getenv('SERVER_IP', '127.0.0.1')
 DOMAIN = os.getenv('DOMAIN', 'localhost')
 
-ALLOWED_HOSTS = ['89.169.174.166', '127.0.0.1', 'localhost', 'foodgram-project.ddns.net']
+ALLOWED_HOSTS = [SERVER_IP, DOMAIN]
 
 
 # Application definition

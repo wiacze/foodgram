@@ -8,7 +8,7 @@ from rest_framework.test import APIClient
 User = get_user_model()
 
 
-class TaskiAPITestCase(TestCase):
+class FoodgramAPITestCase(TestCase):
     def setUp(self):
         self.guest_client = APIClient()
         self.auth_client = APIClient()

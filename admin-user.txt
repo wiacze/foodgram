@@ -1,3 +1,5 @@
-supuser
-sup@user.com
-1324zcxv
+Проект доступен по адресу https://foodgram-project.ddns.net
+Данные суперпользователя:
+Логин: supuser
+Email: sup@user.com
+Password: 1324zcxv

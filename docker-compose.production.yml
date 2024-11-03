@@ -31,6 +31,7 @@ services:
     image: ${USERNAME}/foodgram_gateway
     env_file: .env
     volumes:
+      - ../docs/:/usr/share/nginx/html/api/docs/
       - static_volume:/staticfiles/
       - media_volume:/media/
     ports:

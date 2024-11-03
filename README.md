@@ -2,3 +2,4 @@
 
 По адресу http://localhost изучите фронтенд веб-приложения, а по адресу http://localhost/api/docs/ — спецификацию API.
 
+Проект доступен по адресу https://foodgram-project.ddns.net

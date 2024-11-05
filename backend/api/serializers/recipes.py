@@ -12,7 +12,6 @@ from .ingredients import (
     IngredientAmountShortSerializer,
 )
 
-
 User = get_user_model()
 
 

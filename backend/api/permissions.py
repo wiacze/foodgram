@@ -11,6 +11,7 @@ class IsAdminIsAuthorOrReadOnly(BasePermission):
             and (
                 request.user.is_superuser
                 or request.user.is_admin
+                or request.user.is_staff
                 or request.user == obj.author
             )
         )

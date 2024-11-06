@@ -5,6 +5,7 @@ from django_filters.rest_framework import (
     FilterSet,
     ModelMultipleChoiceFilter,
 )
+from rest_framework.filters import SearchFilter
 
 from core.models import Ingredient, Recipe, Tag
 
@@ -12,13 +13,8 @@ from core.models import Ingredient, Recipe, Tag
 User = get_user_model()
 
 
-class IngredientFilter(FilterSet):
-
-    name = CharFilter(lookup_expr='icontains')
-
-    class Meta:
-        model = Ingredient
-        fields = ('name',)
+class IngredientSearchFilter(SearchFilter):
+    search_param = 'name'
 
 
 class RecipeFilter(FilterSet):

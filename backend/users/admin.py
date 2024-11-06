@@ -57,8 +57,8 @@ class SubscriptionAdmin(admin.ModelAdmin):
         'author',
         'subscriber',
     )
-    list_filter = ('author', 'subscriber',)
-    search_fields = ('author', 'subscriber',)
+    list_filter = ('author__username', 'subscriber__username',)
+    search_fields = ('author__username', 'subscriber__username',)
     list_per_page = SUBS_PER_PAGE
 
 

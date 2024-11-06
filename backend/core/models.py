@@ -177,8 +177,8 @@ class IngredientAmount(RecipeFieldModel):
     )
 
     class Meta:
-        verbose_name = 'Количество ингредиента.'
-        verbose_name_plural = 'Количество ингредиента.'
+        verbose_name = 'Количество ингредиента'
+        verbose_name_plural = 'Количество ингредиента'
         default_related_name = 'amount_ingredients'
         ordering = ('id',)
         constraints = (

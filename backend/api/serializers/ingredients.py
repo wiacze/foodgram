@@ -1,5 +1,7 @@
 from rest_framework import serializers
+from django.core.validators import MinValueValidator, MaxValueValidator
 
+from foodgram_backend import constants
 from core.models import Ingredient, IngredientAmount
 
 
@@ -10,7 +12,7 @@ class IngredientSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class IngredientAmountShortSerializer(serializers.ModelSerializer):
+class IngredientInRecipeSerializer(serializers.ModelSerializer):
     id = serializers.PrimaryKeyRelatedField(
         queryset=Ingredient.objects.all(), source='ingredient'
     )
@@ -18,6 +20,17 @@ class IngredientAmountShortSerializer(serializers.ModelSerializer):
     class Meta:
         model = IngredientAmount
         fields = ('id', 'amount')
+
+    def validate_amount(self, value):
+        if value < constants.MIN_VALUE:
+            raise serializers.ValidationError(
+                constants.INVALID_MIN_MESSAGE
+            )
+        if value > constants.MAX_VALUE:
+            raise serializers.ValidationError(
+                constants.INVALID_MAX_MESSAGE
+            )
+        return value
 
 
 class IngredientAmountSerializer(serializers.ModelSerializer):

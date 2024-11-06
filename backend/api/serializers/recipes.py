@@ -9,7 +9,7 @@ from .tags import TagSerializer
 from .users import GetUserSerializer
 from .ingredients import (
     IngredientAmountSerializer,
-    IngredientAmountShortSerializer,
+    IngredientInRecipeSerializer,
 )
 
 User = get_user_model()
@@ -78,7 +78,7 @@ class RecipeSafeSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = IngredientAmountShortSerializer(many=True)
+    ingredients = IngredientInRecipeSerializer(many=True)
     tags = serializers.PrimaryKeyRelatedField(
         queryset=Tag.objects.all(), many=True
     )

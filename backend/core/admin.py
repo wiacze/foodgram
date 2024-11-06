@@ -88,6 +88,18 @@ class RecipeAdmin(admin.ModelAdmin):
         return Favorite.objects.filter(recipe=obj).count()
 
 
+class IngredientAmounAdmin(admin.ModelAdmin):
+    pass
+
+
+class FavoriteAdmin(admin.ModelAdmin):
+    pass
+
+
+class ShoppingCartAdmin(admin.ModelAdmin):
+    pass
+
+
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Recipe, RecipeAdmin)

@@ -15,7 +15,6 @@ class Command(BaseCommand):
         ) as file:
             try:
                 reader = csv.reader(file)
-                next(reader)
                 tags = [
                     Tag(
                         name=row[0],

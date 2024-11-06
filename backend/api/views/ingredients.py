@@ -1,5 +1,4 @@
 from rest_framework import viewsets
-from django_filters.rest_framework import DjangoFilterBackend
 
 from core.models import Ingredient
 from api.serializers.ingredients import IngredientSerializer

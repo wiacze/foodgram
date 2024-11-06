@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.core.validators import MinValueValidator, MaxValueValidator
 
 from foodgram_backend import constants
 from core.models import Ingredient, IngredientAmount

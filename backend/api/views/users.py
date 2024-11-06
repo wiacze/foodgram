@@ -15,14 +15,6 @@ User = get_user_model()
 
 class CustomUserViewSet(UserViewSet):
 
-    @action(
-        methods=['get'],
-        detail=False,
-        permission_classes=[permissions.IsAuthenticated],
-    )
-    def me(self, request, *args, **kwargs):
-        return super().me(request, *args, **kwargs)
-
     def change_avatar(self, data):
         instance = self.get_instance()
         serializer = AvatarSerializer(instance, data=data)

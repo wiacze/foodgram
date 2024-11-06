@@ -171,4 +171,6 @@ class RecipesCountSerializer(GetUserSerializer):
         recipes = object.recipes.all()
         if recipes_limit and recipes_limit.isdigit():
             recipes = object.recipes.all()[:int(recipes_limit)]
-        return RecipeShortSerializer(recipes, many=True).data
+        return RecipeShortSerializer(
+            recipes, many=True, context={'request': request},
+        ).data

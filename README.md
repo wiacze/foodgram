@@ -228,8 +228,4 @@ docker compose exec backend python manage.py createsuperuser
 
 `Python` `Django` `Django REST Framework (DRF)` `Gunicorn` `JavaScript` `React` `PostgeSQL` `Nginx` `Docker` `DockerHub` `CI/CD (GitHub Actions)`
 
-#### Над проектом работал
-
-[`wiacze`](https://github.com/wiacze)
-
-*Проект сделан в рамках образовательной программы Я.Практикум*
+#### Над бэкендом работал — [`wiacze`](https://github.com/wiacze)

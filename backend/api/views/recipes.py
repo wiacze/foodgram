@@ -32,7 +32,8 @@ class RecipeViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return self.queryset.prefetch_related(
-            'tags', 'ingredients').select_related('author')
+            'tags', 'ingredients', 'amount_ingredients__ingredient',
+        ).select_related('author')
 
     def get_serializer_class(self):
         if self.action in ['list', 'retrieve']:

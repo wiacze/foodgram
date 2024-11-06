@@ -11,6 +11,5 @@ class IngredientViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = IngredientSerializer
     permission_classes = (IsAdminIsAuthorOrReadOnly,)
     filter_backends = (IngredientSearchFilter,)
-    search_fields = ('^name',)
-    # Заменить на '@name' после перехода на postgresql в продакшене
+    search_fields = ('@name',)  # '@name' для PostgeSQL, '^name' для SQLite
     pagination_class = None

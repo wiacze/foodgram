@@ -199,7 +199,7 @@ class Favorite(UserFieldModel, RecipeFieldModel):
         verbose_name = 'Избранное'
         verbose_name_plural = 'Избранное'
         default_related_name = 'favorited'
-        ordering = (
+        constraints = (
             models.UniqueConstraint(
                 fields=['user', 'recipe'],
                 name='unique_favorite_recipe'

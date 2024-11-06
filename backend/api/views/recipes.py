@@ -9,8 +9,10 @@ from core.models import Recipe, ShoppingCart, Favorite, IngredientAmount
 from api.permissions import IsAdminIsAuthorOrReadOnly
 from api.filters import RecipeFilter
 from api.utils.generators import generate_shopping_list
-from api.serializers.shopping_cart import ShoppingCartSerializer
-from api.serializers.favorite import FavoriteSerializer
+from api.serializers.favorite_shopping_cart import (
+    FavoriteSerializer,
+    ShoppingCartSerializer,
+)
 from api.serializers.recipes import (
     RecipeSerializer,
     RecipeSafeSerializer,

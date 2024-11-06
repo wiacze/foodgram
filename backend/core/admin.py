@@ -13,6 +13,7 @@ from .models import (
     IngredientAmount,
     Recipe,
     Favorite,
+    ShoppingCart
 )
 
 
@@ -89,17 +90,26 @@ class RecipeAdmin(admin.ModelAdmin):
 
 
 class IngredientAmounAdmin(admin.ModelAdmin):
-    pass
+    list_display = (
+        'id', 'recipe', 'ingredient', 'amount',
+    )
 
 
-class FavoriteAdmin(admin.ModelAdmin):
-    pass
-
-
-class ShoppingCartAdmin(admin.ModelAdmin):
-    pass
+class FavoriteShoppingCartAdmin(admin.ModelAdmin):
+    list_display = (
+        'id', 'user', 'recipe',
+    )
+    search_fields = (
+        'id', 'user', 'recipe',
+    )
+    list_filter = (
+        'user', 'recipe',
+    )
 
 
 admin.site.register(Tag, TagAdmin)
 admin.site.register(Ingredient, IngredientAdmin)
 admin.site.register(Recipe, RecipeAdmin)
+admin.site.register(Favorite, FavoriteShoppingCartAdmin)
+admin.site.register(ShoppingCart, FavoriteShoppingCartAdmin)
+admin.site.register(IngredientAmount, IngredientAmounAdmin)

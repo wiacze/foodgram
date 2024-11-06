@@ -27,53 +27,6 @@ class RecipeShortSerializer(serializers.ModelSerializer):
         )
 
 
-class RecipeSafeSerializer(serializers.ModelSerializer):
-
-    tags = TagSerializer(many=True)
-    author = GetUserSerializer()
-    ingredients = IngredientAmountSerializer(
-        source='amount_ingredients', many=True
-    )
-    is_favorited = serializers.SerializerMethodField()
-    is_in_shopping_cart = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Recipe
-        fields = (
-            'id',
-            'tags',
-            'author',
-            'ingredients',
-            'is_favorited',
-            'is_in_shopping_cart',
-            'name',
-            'image',
-            'text',
-            'cooking_time',
-        )
-        read_only_fields = (
-            'author',
-            'ingredients',
-            'tags',
-            'is_favorited',
-            'is_in_shopping_cart',
-        )
-
-    def get_is_favorited(self, object):
-        user = self.context.get('request').user
-        return (
-            user.is_authenticated
-            and user.favorited.filter(recipe=object).exists()
-        )
-
-    def get_is_in_shopping_cart(self, object):
-        user = self.context.get('request').user
-        return (
-            user.is_authenticated
-            and user.shopping_cart.filter(recipe=object).exists()
-        )
-
-
 class RecipeSerializer(serializers.ModelSerializer):
     ingredients = IngredientInRecipeSerializer(many=True)
     tags = serializers.PrimaryKeyRelatedField(
@@ -84,14 +37,10 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Recipe
-        fields = (
-            'id',
+        fields = RecipeShortSerializer.Meta.fields + (
             'ingredients',
             'tags',
-            'image',
-            'name',
             'text',
-            'cooking_time',
             'author'
         )
 
@@ -163,24 +112,57 @@ class RecipeSerializer(serializers.ModelSerializer):
         return serializer.data
 
 
+class RecipeSafeSerializer(serializers.ModelSerializer):
+
+    tags = TagSerializer(many=True)
+    author = GetUserSerializer()
+    ingredients = IngredientAmountSerializer(
+        source='amount_ingredients', many=True
+    )
+    is_favorited = serializers.SerializerMethodField()
+    is_in_shopping_cart = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Recipe
+        fields = RecipeSerializer.Meta.fields + (
+            'is_favorited',
+            'is_in_shopping_cart',
+        )
+
+        read_only_fields = (
+            'author',
+            'ingredients',
+            'tags',
+            'is_favorited',
+            'is_in_shopping_cart',
+        )
+
+    def get_is_favorited(self, object):
+        user = self.context.get('request').user
+        return (
+            user.is_authenticated
+            and user.favorited.filter(recipe=object).exists()
+        )
+
+    def get_is_in_shopping_cart(self, object):
+        user = self.context.get('request').user
+        return (
+            user.is_authenticated
+            and user.shopping_cart.filter(recipe=object).exists()
+        )
+
+
 class RecipesCountSerializer(GetUserSerializer):
     recipes = serializers.SerializerMethodField()
     recipes_count = serializers.IntegerField(
         read_only=True, source='recipes.count'
     )
 
-    class Meta:
+    class Meta():
         model = User
-        fields = (
-            'email',
-            'id',
-            'username',
-            'first_name',
-            'last_name',
-            'is_subscribed',
+        fields = GetUserSerializer.Meta.fields + (
             'recipes',
             'recipes_count',
-            'avatar',
         )
 
     def get_recipes(self, object):

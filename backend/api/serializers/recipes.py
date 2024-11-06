@@ -31,7 +31,9 @@ class RecipeSafeSerializer(serializers.ModelSerializer):
 
     tags = TagSerializer(many=True)
     author = GetUserSerializer()
-    ingredients = serializers.SerializerMethodField()
+    ingredients = IngredientAmountSerializer(
+        source='amount_ingredients', many=True
+    )
     is_favorited = serializers.SerializerMethodField()
     is_in_shopping_cart = serializers.SerializerMethodField()
 
@@ -56,11 +58,6 @@ class RecipeSafeSerializer(serializers.ModelSerializer):
             'is_favorited',
             'is_in_shopping_cart',
         )
-
-    @staticmethod
-    def get_ingredients(object):
-        ingredients = IngredientAmount.objects.filter(recipe=object)
-        return IngredientAmountSerializer(ingredients, many=True).data
 
     def get_is_favorited(self, object):
         user = self.context.get('request').user

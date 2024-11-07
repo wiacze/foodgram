@@ -46,15 +46,16 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     @staticmethod
     def validate_items(data, message):
+        field_name_appeal, field_name_plural = message
         if len(data) == 0:
             raise serializers.ValidationError(
-                f'Количество {message[0]} должно быть больше нуля.'
+                f'Количество {field_name_appeal} должно быть больше нуля.'
             )
         items = []
         for item in data:
             if item in items:
                 raise serializers.ValidationError(
-                    f'{message[1]} не должны повторяться.'
+                    f'{field_name_plural} не должны повторяться.'
                 )
             items.append(item)
         return data

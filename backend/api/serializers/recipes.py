@@ -28,9 +28,9 @@ class RecipeShortSerializer(serializers.ModelSerializer):
 
 
 class RecipeSerializer(serializers.ModelSerializer):
-    ingredients = IngredientInRecipeSerializer(many=True)
+    ingredients = IngredientInRecipeSerializer(many=True, required=True)
     tags = serializers.PrimaryKeyRelatedField(
-        queryset=Tag.objects.all(), many=True
+        queryset=Tag.objects.all(), many=True, required=True
     )
     image = Base64ImageField(use_url=True, max_length=None, required=True)
     author = GetUserSerializer(read_only=True)
@@ -43,6 +43,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             'text',
             'author'
         )
+        # extra_kwargs = {field:{'required': True} for field in fields}
 
     @staticmethod
     def validate_items(data, message):
@@ -60,12 +61,26 @@ class RecipeSerializer(serializers.ModelSerializer):
             items.append(item)
         return data
 
+    def validate(self, data):
+        # Проверку из update() убрал, но пришлось перенести ее
+        # в отдельный метод, т.к. validate_value() не отрабатывает
+        # и не возвращает никаких значений, если в упорядоченном списке
+        # отсутствует ключ с именем value, несмотря на установленный флаг required=True.
+        # Не до конца понимаю, как лучше сделать.
+        tags = data.get('tags')
+        ingredients = data.get('ingredients')
+        if not tags or not ingredients:
+            raise serializers.ValidationError('Обязательное поле.')
+        return data
+
     def validate_tags(self, data):
         message = ('тегов', 'теги')
+        print('data tags', data)
         return self.validate_items(data, message)
 
     def validate_ingredients(self, data):
         message = ('ингредиентов', 'ингредиенты')
+        print('data ingredients', data)
         return self.validate_items(data, message)
 
     @staticmethod
@@ -94,11 +109,11 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        if (
-            not validated_data.get('tags')
-            or not validated_data.get('ingredients')
-        ):
-            raise serializers.ValidationError('')
+        # if (
+        #     not validated_data.get('tags')
+        #     or not validated_data.get('ingredients')
+        # ):
+        #     raise serializers.ValidationError('')
         tags = validated_data.pop('tags')
         ingredients = validated_data.pop('ingredients')
         instance.tags.clear()

@@ -65,8 +65,8 @@ class RecipeSerializer(serializers.ModelSerializer):
         # Проверку из update() убрал, но пришлось перенести ее
         # в отдельный метод, т.к. validate_value() не отрабатывает
         # и не возвращает никаких значений, если в упорядоченном списке
-        # отсутствует ключ с именем value, несмотря на установленный флаг required=True.
-        # Не до конца понимаю, как лучше сделать.
+        # отсутствует ключ с именем value, несмотря на установленный
+        # флаг required=True. Не до конца понимаю, как лучше сделать.
         tags = data.get('tags')
         ingredients = data.get('ingredients')
         if not tags or not ingredients:

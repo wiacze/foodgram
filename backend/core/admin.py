@@ -93,6 +93,9 @@ class IngredientAmounAdmin(admin.ModelAdmin):
     list_display = (
         'id', 'recipe', 'ingredient', 'amount',
     )
+    search_fields = (
+        'id', 'recipe__name', 'ingredient__name',
+    )
 
 
 class FavoriteShoppingCartAdmin(admin.ModelAdmin):
@@ -100,10 +103,7 @@ class FavoriteShoppingCartAdmin(admin.ModelAdmin):
         'id', 'user', 'recipe',
     )
     search_fields = (
-        'id', 'user', 'recipe',
-    )
-    list_filter = (
-        'user', 'recipe',
+        'id', 'user__username', 'recipe__name',
     )
 
 

@@ -43,7 +43,6 @@ class RecipeSerializer(serializers.ModelSerializer):
             'text',
             'author'
         )
-        # extra_kwargs = {field:{'required': True} for field in fields}
 
     @staticmethod
     def validate_items(data, message):
@@ -62,11 +61,6 @@ class RecipeSerializer(serializers.ModelSerializer):
         return data
 
     def validate(self, data):
-        # Проверку из update() убрал, но пришлось перенести ее
-        # в отдельный метод, т.к. validate_value() не отрабатывает
-        # и не возвращает никаких значений, если в упорядоченном списке
-        # отсутствует ключ с именем value, несмотря на установленный
-        # флаг required=True. Не до конца понимаю, как лучше сделать.
         tags = data.get('tags')
         ingredients = data.get('ingredients')
         if not tags or not ingredients:
@@ -75,12 +69,10 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def validate_tags(self, data):
         message = ('тегов', 'теги')
-        print('data tags', data)
         return self.validate_items(data, message)
 
     def validate_ingredients(self, data):
         message = ('ингредиентов', 'ингредиенты')
-        print('data ingredients', data)
         return self.validate_items(data, message)
 
     @staticmethod
@@ -109,11 +101,6 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def update(self, instance, validated_data):
-        # if (
-        #     not validated_data.get('tags')
-        #     or not validated_data.get('ingredients')
-        # ):
-        #     raise serializers.ValidationError('')
         tags = validated_data.pop('tags')
         ingredients = validated_data.pop('ingredients')
         instance.tags.clear()

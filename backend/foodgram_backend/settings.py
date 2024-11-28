@@ -83,8 +83,8 @@ DATABASES = {
     }
 }
 
-# If need sqlite 
- 
+# If need sqlite
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

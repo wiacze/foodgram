@@ -206,6 +206,106 @@ docker compose exec backend python manage.py createsuperuser
 
 </details>
 
+## Примеры запросов к API
+
+<details>
+<summary>Пользователи</summary>
+
+#### Список пользователей
+```
+GET api/users/
+```
+<details>
+  <summary>Пример ответа</summary>
+    <pre>{
+  "count": 123,
+  "next": "http://foodgram.example.org/api/users/?page=4",
+  "previous": "http://foodgram.example.org/api/users/?page=2",
+  "results": [
+    {
+      "email": "user@example.com",
+      "id": 0,
+      "username": "string",
+      "first_name": "Вася",
+      "last_name": "Иванов",
+      "is_subscribed": false,
+      "avatar": "http://foodgram.example.org/media/users/image.png"
+    }
+  ]
+}</pre>
+</details>
+
+#### Регистрация пользователя
+```
+POST api/users/
+```
+<details>
+  <summary>Пример запроса</summary>
+    <pre>{
+  "email": "vpupkin@yandex.ru",
+  "username": "vasya.pupkin",
+  "first_name": "Вася",
+  "last_name": "Иванов",
+  "password": "Qwerty123"
+}</pre>
+</details>
+
+#### Профиль пользователя
+```
+GET api/users/{id}/
+```
+<details>
+  <summary>Пример ответа</summary>
+    <pre>{
+  "email": "user@example.com",
+  "id": 0,
+  "username": "string",
+  "first_name": "Вася",
+  "last_name": "Иванов",
+  "is_subscribed": false,
+  "avatar": "http://foodgram.example.org/media/users/image.png"
+}</pre>
+</details>
+
+#### Текущий пользователь
+```
+GET api/users/me/
+```
+<details>
+  <summary>Пример ответа</summary>
+    <pre>{
+  "email": "user@example.com",
+  "id": 0,
+  "username": "string",
+  "first_name": "Вася",
+  "last_name": "Иванов",
+  "is_subscribed": false,
+  "avatar": "http://foodgram.example.org/media/users/image.png"
+}</pre>
+</details>
+
+#### Добавление аватара
+```
+PUT api/users/me/avatar/
+```
+<details>
+  <summary>Пример запроса</summary>
+    <pre>{
+  "avatar": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAgMAAABieywaAAAACVBMVEUAAAD///9fX1/S0ecCAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNoAAAAggCByxOyYQAAAABJRU5ErkJggg=="
+}</pre>
+</details>
+
+#### Удаление аватара
+```
+DELETE api/users/me/avatar/
+```
+<details>
+  <summary>Пример ответа</summary>
+    <pre>204 Аватар успешно удален</pre>
+</details>
+
+</details>
+
 ## Библиотеки `Python`
 
 - `Django`==3.2.3

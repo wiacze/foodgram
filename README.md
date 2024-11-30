@@ -3,10 +3,6 @@
 
 ![image alt](https://github.com/wiacze/foodgram/raw/main/foodgram_image.png)
 
-Проект доступен по адресу https://foodgram-project.ddns.net
-
-Ссылка на документацию с примерами запросов — https://foodgram-project.ddns.net/redoc/
-
 ## Установка и запуск
 <details>
 <summary>Инструкция по удаленному развертыванию</summary>

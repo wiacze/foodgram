@@ -301,7 +301,40 @@ DELETE api/users/me/avatar/
 ```
 <details>
   <summary>Пример ответа</summary>
-    <pre>204 Аватар успешно удален</pre>
+    <pre>`204` Аватар успешно удален</pre>
+</details>
+
+#### Изменение пароля
+```
+DELETE /api/users/me/avatar/
+```
+<details>
+   <summary>Пример запроса</summary>
+     <pre>{
+  "new_password": "string",
+  "current_password": "string"
+}</pre>
+</details>
+
+#### Получить токен авторизации
+```
+POST /api/auth/token/login/
+```
+<details>
+   <summary>Пример запроса</summary>
+   <pre>{
+  "password": "string",
+  "email": "string"
+}</pre>
+</details>
+
+#### Удаление токена
+```
+POST /api/auth/token/logout/
+```
+<details>
+   <summary>Пример запроса</summary>
+   <pre>null</pre>
 </details>
 
 </details>
